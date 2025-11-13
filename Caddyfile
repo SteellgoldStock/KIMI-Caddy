@@ -2,24 +2,10 @@
     auto_https off
 }
 
-:10007 {
+:{$PORT:8080} {
     log {
         format json
     }
 
-    handle_path /api/* {
-        reverse_proxy {$BACKEND_URL} {
-            transport http {
-                tls
-                tls_insecure_skip_verify
-            }
-        }
-    }
-
-    reverse_proxy {$BACKEND_URL} {
-        transport http {
-            tls
-            tls_insecure_skip_verify
-        }
-    }
+    reverse_proxy http://{$BACKEND_URL}
 }
